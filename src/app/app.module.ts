@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 
 import { MsalGuard, MsalModule } from '@azure/msal-angular';
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
+import {  RouterModule } from '@angular/router';
+import { AppRoutingModule } from './approuting/approuting.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,7 @@ import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     MsalModule.forRoot( new PublicClientApplication({
       auth: {
         clientId: '', 
@@ -24,20 +27,15 @@ import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
       }
     }),
     {
-      interactionType: InteractionType.Popup, // MSAL Guard Configuration
-      authRequest: {
-        scopes: ['https://admin.services.crm.dynamics.com/user_impersonation']
-      }
-    },  
+      interactionType: InteractionType.Popup
+    }, 
     {
-      interactionType: InteractionType.Popup, // MSAL Interceptor Configuration
-      protectedResourceMap: new Map([ 
-          ['https://api.com', ['https://admin.services.crm.dynamics.com/user_impersonation']]
-      ])
+      interactionType: InteractionType.Popup,
+      protectedResourceMap: new Map([])
     })
   ],
   providers: [
-    MsalGuard
+    MsalGuard,
   ],
   bootstrap: [AppComponent]
 })

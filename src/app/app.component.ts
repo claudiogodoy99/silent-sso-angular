@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { MsalBroadcastService } from '@azure/msal-angular/msal.broadcast.service';
 import { MsalGuard } from '@azure/msal-angular/msal.guard';
@@ -15,27 +16,27 @@ export class AppComponent implements OnInit {
 
   access_token = ''
 
-  constructor(private authService: MsalService) { }
+  constructor(private authService: MsalService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
-    //depara
-    //mf 1 - 1234,
-    //mf 2 - 12345,
     
-    this.authService.ssoSilent({
-      loginHint: 'claudiogodoy@microsoft.com',
-      scopes: ['']
-    }).subscribe(x => {
-      this.authService.acquireTokenSilent({
-        scopes: [''],
-        account: x.account as AccountInfo
-      }).subscribe(y => {
-        console.log(y)
-        this.access_token = y.accessToken;
+    this.route.queryParams.subscribe(params => {
+       var loginHint = params['login_hint'];
+
+       this.authService.ssoSilent({
+        loginHint,
+        scopes: ['user.read']
+      }).subscribe(x => {
+        this.authService.acquireTokenSilent({
+          scopes: ['user.read'],
+          account: x.account as AccountInfo
+        }).subscribe(y => {
+          console.log(y)
+          this.access_token = y.accessToken;
+        });
+        
       });
-      
-    });
+    })
   }
 
 }
