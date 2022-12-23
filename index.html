@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>top-framw</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+</body>
+</html>
+
+<script>
+  function prepareFrame() {
+        var ifrm = document.createElement("iframe");
+        ifrm.setAttribute("src", "http://localhost:4200/?login_hint=claudiogodoy@microsoft.com");
+        ifrm.style.width = "100%";
+        ifrm.style.height = "100%";
+        document.body.appendChild(ifrm);
+    }
+
+    window.onload = prepareFrame();
+</script>

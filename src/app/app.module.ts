@@ -17,9 +17,9 @@ import { AppRoutingModule } from './approuting/approuting.module';
     AppRoutingModule,
     MsalModule.forRoot( new PublicClientApplication({
       auth: {
-        clientId: '', 
-        authority: 'https://login.microsoftonline.com//',
-        redirectUri: 'http://localhost:4200'
+        clientId: '{clientId}', 
+        authority: 'https://login.microsoftonline.com/{tenantId}/',
+        redirectUri: '{}'
       },
       cache: {
         cacheLocation: 'localStorage',
